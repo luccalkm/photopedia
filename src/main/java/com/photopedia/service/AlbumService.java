@@ -1,0 +1,33 @@
+package com.photopedia.service;
+import com.photopedia.model.Album;
+import com.photopedia.model.Photographer;
+import com.photopedia.repository.AlbumRepository;
+import com.photopedia.repository.PhotographerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AlbumService {
+
+    @Autowired
+    private AlbumRepository albumRepository;
+
+    public List<Album> findAll() {
+        return albumRepository.findAll();
+    }
+
+    public Optional<Album> findById(Long id) {
+        return albumRepository.findById(id);
+    }
+
+    public Album save(Album album) {
+        return albumRepository.save(album);
+    }
+
+    public void deleteById(Long id) {
+        albumRepository.deleteById(id);
+    }
+}
