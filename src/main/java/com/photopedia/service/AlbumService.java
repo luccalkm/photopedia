@@ -1,8 +1,7 @@
 package com.photopedia.service;
+
 import com.photopedia.model.Album;
-import com.photopedia.model.Photographer;
 import com.photopedia.repository.AlbumRepository;
-import com.photopedia.repository.PhotographerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

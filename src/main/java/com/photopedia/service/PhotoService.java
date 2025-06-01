@@ -1,4 +1,5 @@
 package com.photopedia.service;
+
 import com.photopedia.model.Photo;
 import com.photopedia.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

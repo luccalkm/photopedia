@@ -1,6 +1,5 @@
 package com.photopedia.repository;
 
-import com.photopedia.model.Album;
 import com.photopedia.model.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
