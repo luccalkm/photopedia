@@ -14,7 +14,9 @@ public class DotenvLoader implements ApplicationListener<ApplicationEnvironmentP
 
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
-        Dotenv dotenv = Dotenv.load();
+        Dotenv dotenv = Dotenv.configure()
+                .ignoreIfMissing()
+                .load();
 
         Map<String, Object> props = new HashMap<>();
         for (DotenvEntry entry : dotenv.entries()) {
