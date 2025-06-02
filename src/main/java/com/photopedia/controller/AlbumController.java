@@ -4,11 +4,14 @@ import com.photopedia.dto.AlbumDto;
 import com.photopedia.dto.request.AlbumCreateRequest;
 import com.photopedia.mapper.AlbumMapper;
 import com.photopedia.model.Album;
+import com.photopedia.model.Photographer;
 import com.photopedia.service.AlbumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class AlbumController {
             description = "Returns all photo albums in the system / Retorna todos os álbuns cadastrados"
     )
     public List<AlbumDto> getAll() {
-        return albumMapper.toDtoList(albumService.findAll());
+        return albumService.findAll().stream().map(albumService::toDto).toList();
     }
 
     @GetMapping("/{id}")
@@ -42,8 +45,8 @@ public class AlbumController {
     )
     public AlbumDto getById(@PathVariable Long id) {
         return albumService.findById(id)
-                .map(albumMapper::toDto)
-                .orElse(null);
+                .map(albumService::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Album not found"));
     }
 
     @PostMapping
@@ -52,9 +55,9 @@ public class AlbumController {
             description = "Registers a new album under a photographer / Cadastra um novo álbum"
     )
     public AlbumDto create(@RequestBody AlbumCreateRequest request) {
-        Album album = albumMapper.toEntity(request);
-        return albumMapper.toDto(albumService.save(album));
+        return albumService.createAlbumWithPhotos(request);
     }
+
 
     @PutMapping("/{id}")
     @Operation(
@@ -62,9 +65,7 @@ public class AlbumController {
             description = "Updates an existing album’s data / Atualiza os dados de um álbum"
     )
     public AlbumDto update(@PathVariable Long id, @RequestBody AlbumCreateRequest request) {
-        Album updated = albumMapper.toEntity(request);
-        updated.setId(id);
-        return albumMapper.toDto(albumService.save(updated));
+        return albumService.updateAlbumWithPhotos(id, request);
     }
 
     @DeleteMapping("/{id}")

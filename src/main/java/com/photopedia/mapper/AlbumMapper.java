@@ -8,13 +8,12 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { PhotoMapper.class })
 public interface AlbumMapper {
-    AlbumDto toDto(Album album);
-    List<AlbumDto> toDtoList(List<Album> albums);
-
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "photos", ignore = true)
     @Mapping(target = "photographer", ignore = true)
     Album toEntity(AlbumCreateRequest request);
+
+    AlbumDto toDto(Album album);
+    List<AlbumDto> toDtoList(List<Album> albums);
 }

@@ -27,40 +27,26 @@ public class PhotoController {
     private PhotoMapper photoMapper;
 
     @GetMapping
-    @Operation(
-            summary = "List all photos / Listar fotos",
-            description = "Returns all photos stored in the system / Retorna todas as fotos cadastradas"
-    )
+    @Operation(summary = "List all photos / Listar fotos", description = "Returns all photos stored in the system / Retorna todas as fotos cadastradas")
     public List<PhotoDto> getAll() {
         return photoMapper.toDtoList(photoService.findAll());
     }
 
     @GetMapping("/{id}")
-    @Operation(
-            summary = "Get photo by ID / Buscar foto por ID",
-            description = "Fetch a specific photo by its ID / Retorna os dados de uma foto específica"
-    )
+    @Operation(summary = "Get photo by ID / Buscar foto por ID", description = "Fetch a specific photo by its ID / Retorna os dados de uma foto específica")
     public PhotoDto getById(@PathVariable Long id) {
-        return photoService.findById(id)
-                .map(photoMapper::toDto)
-                .orElse(null);
+        return photoService.findById(id).map(photoMapper::toDto).orElse(null);
     }
 
     @PostMapping
-    @Operation(
-            summary = "Create new photo / Criar foto",
-            description = "Adds a new photo to an album / Cadastra uma nova foto no sistema"
-    )
+    @Operation(summary = "Create new photo / Criar foto", description = "Adds a new photo to an album / Cadastra uma nova foto no sistema")
     public PhotoDto create(@RequestBody PhotoCreateRequest request) {
         Photo photo = photoMapper.toEntity(request);
         return photoMapper.toDto(photoService.save(photo));
     }
 
     @PutMapping("/{id}")
-    @Operation(
-            summary = "Update photo / Atualizar foto",
-            description = "Updates an existing photo / Atualiza os dados de uma foto existente"
-    )
+    @Operation(summary = "Update photo / Atualizar foto", description = "Updates an existing photo / Atualiza os dados de uma foto existente")
     public PhotoDto update(@PathVariable Long id, @RequestBody PhotoCreateRequest request) {
         Photo updated = photoMapper.toEntity(request);
         updated.setId(id);
@@ -68,10 +54,7 @@ public class PhotoController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(
-            summary = "Delete photo / Remover foto",
-            description = "Deletes a photo by its ID / Exclui uma foto pelo seu ID"
-    )
+    @Operation(summary = "Delete photo / Remover foto", description = "Deletes a photo by its ID / Exclui uma foto pelo seu ID")
     public void delete(@PathVariable Long id) {
         photoService.deleteById(id);
     }

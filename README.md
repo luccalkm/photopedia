@@ -124,7 +124,7 @@ Content-Type: application/json
 
 ```json
 {
-  "name": "Lucca Lima"
+  "name": "Lucca Motta"
 }
 ```
 
@@ -148,7 +148,6 @@ Content-Type: application/json
 ```json
 {
   "title": "Summer Vibes",
-  "year": 2024,
   "photographerId": 1
 }
 ```
@@ -175,7 +174,6 @@ Content-Type: application/json
 ```json
 {
   "title": "Summer Vibes Updated",
-  "year": 2025,
   "photographerId": 1
 }
 ```

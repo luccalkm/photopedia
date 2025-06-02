@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class PhotographerCreateRequest {
-    @NotBlank
+    @NotBlank(message = "Name is required")
     private String name;
     private List<AlbumCreateRequest> albums;
 }

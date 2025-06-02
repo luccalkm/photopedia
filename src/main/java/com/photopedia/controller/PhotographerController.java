@@ -14,10 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/photographers")
-@Tag(
-        name = "Photographers / Fotógrafos",
-        description = "Manage professional photographers and their albums / Gerencia fotógrafos profissionais e seus álbuns"
-)
+@Tag(name = "Photographers / Fotógrafos", description = "Manage professional photographers and their albums / Gerencia fotógrafos profissionais e seus álbuns")
 public class PhotographerController {
 
     @Autowired
@@ -27,51 +24,34 @@ public class PhotographerController {
     private PhotographerMapper photographerMapper;
 
     @GetMapping
-    @Operation(
-            summary = "List all photographers / Listar fotógrafos",
-            description = "Returns all photographers in the system / Retorna todos os fotógrafos cadastrados"
-    )
+    @Operation(summary = "List all photographers / Listar fotógrafos", description = "Returns all photographers in the system / Retorna todos os fotógrafos cadastrados")
     public List<PhotographerDto> getAll() {
         return photographerMapper.toDtoList(photographerService.findAll());
     }
 
     @GetMapping("/{id}")
-    @Operation(
-            summary = "Get photographer by ID / Buscar fotógrafo por ID",
-            description = "Fetch a specific photographer by its ID / Retorna os dados de um fotógrafo específico"
-    )
+    @Operation(summary = "Get photographer by ID / Buscar fotógrafo por ID", description = "Fetch a specific photographer by its ID / Retorna os dados de um fotógrafo específico")
     public PhotographerDto getById(@PathVariable Long id) {
-        return photographerService.findById(id)
-                .map(photographerMapper::toDto)
-                .orElse(null);
+        return photographerService.findById(id).map(photographerMapper::toDto).orElse(null);
     }
 
     @PostMapping
-    @Operation(
-            summary = "Create new photographer / Criar fotógrafo",
-            description = "Registers a new photographer in the system / Cadastra um novo fotógrafo"
-    )
+    @Operation(summary = "Create new photographer / Criar fotógrafo", description = "Registers a new photographer in the system / Cadastra um novo fotógrafo")
     public PhotographerDto create(@RequestBody PhotographerCreateRequest request) {
-        Photographer photographer = photographerMapper.toEntity(request);
+        var photographer = photographerMapper.toEntity(request);
         return photographerMapper.toDto(photographerService.save(photographer));
     }
 
     @PutMapping("/{id}")
-    @Operation(
-            summary = "Update photographer / Atualizar fotógrafo",
-            description = "Updates an existing photographer’s details / Atualiza os dados de um fotógrafo"
-    )
+    @Operation(summary = "Update photographer / Atualizar fotógrafo", description = "Updates an existing photographer’s details / Atualiza os dados de um fotógrafo")
     public PhotographerDto update(@PathVariable Long id, @RequestBody PhotographerCreateRequest request) {
-        Photographer updated = photographerMapper.toEntity(request);
+        var updated = photographerMapper.toEntity(request);
         updated.setId(id);
         return photographerMapper.toDto(photographerService.save(updated));
     }
 
     @DeleteMapping("/{id}")
-    @Operation(
-            summary = "Delete photographer / Remover fotógrafo",
-            description = "Deletes a photographer by ID / Exclui um fotógrafo pelo seu ID"
-    )
+    @Operation(summary = "Delete photographer / Remover fotógrafo", description = "Deletes a photographer by ID / Exclui um fotógrafo pelo seu ID")
     public void delete(@PathVariable Long id) {
         photographerService.deleteById(id);
     }
