@@ -19,6 +19,10 @@ public class Photographer {
 
     private String name;
 
+    private String email;
+    private String bio;
+    private String phone;
+
     @OneToMany(mappedBy = "photographer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Album> albums;
 }

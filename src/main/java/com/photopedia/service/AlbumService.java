@@ -30,20 +30,12 @@ public class AlbumService {
         return albumRepository.findById(id);
     }
 
-    public AlbumDto createAlbumWithPhotos(AlbumCreateRequest request) {
+    public AlbumDto createAlbum(AlbumCreateRequest request) {
         Album album = albumMapper.toEntity(request);
         Photographer photographer = photographerService.findById(request.getPhotographerId())
                 .orElseThrow(() -> new IllegalArgumentException("Photographer not found"));
 
         album.setPhotographer(photographer);
-
-        if (request.getPhotos() != null) {
-            List<Photo> photos = request.getPhotos().stream()
-                    .map(photoMapper::toEntity)
-                    .peek(photo -> photo.setAlbum(album))
-                    .toList();
-            album.setPhotos(photos);
-        }
 
         return albumMapper.toDto(albumRepository.save(album));
     }
@@ -57,14 +49,6 @@ public class AlbumService {
         Photographer photographer = photographerService.findById(request.getPhotographerId())
                 .orElseThrow(() -> new RuntimeException("Photographer not found"));
         album.setPhotographer(photographer);
-
-        if (request.getPhotos() != null) {
-            List<Photo> updatedPhotos = request.getPhotos().stream()
-                    .map(photoMapper::toEntity)
-                    .peek(photo -> photo.setAlbum(album))
-                    .toList();
-            album.setPhotos(updatedPhotos);
-        }
 
         return albumMapper.toDto(albumRepository.save(album));
     }

@@ -3,8 +3,6 @@ package com.photopedia.controller;
 import com.photopedia.dto.AlbumDto;
 import com.photopedia.dto.request.AlbumCreateRequest;
 import com.photopedia.mapper.AlbumMapper;
-import com.photopedia.model.Album;
-import com.photopedia.model.Photographer;
 import com.photopedia.service.AlbumService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,7 +53,7 @@ public class AlbumController {
             description = "Registers a new album under a photographer / Cadastra um novo álbum"
     )
     public AlbumDto create(@RequestBody AlbumCreateRequest request) {
-        return albumService.createAlbumWithPhotos(request);
+        return albumService.createAlbum(request);
     }
 
 

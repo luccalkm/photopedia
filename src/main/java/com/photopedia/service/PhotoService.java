@@ -1,6 +1,8 @@
 package com.photopedia.service;
 
+import com.photopedia.model.Album;
 import com.photopedia.model.Photo;
+import com.photopedia.repository.AlbumRepository;
 import com.photopedia.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ public class PhotoService {
 
     @Autowired
     private PhotoRepository photoRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
 
     public List<Photo> findAll() {
         return photoRepository.findAll();
@@ -22,7 +26,12 @@ public class PhotoService {
         return photoRepository.findById(id);
     }
 
-    public Photo save(Photo photo) {
+    public Photo save(Photo photo, Long albumId) {
+        if (albumId != null) {
+            Album album = albumRepository.findById(albumId)
+                    .orElseThrow(() -> new RuntimeException("Album not found"));
+            photo.setAlbum(album);
+        }
         return photoRepository.save(photo);
     }
 

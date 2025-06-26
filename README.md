@@ -5,6 +5,8 @@
 Photopedia is a RESTful API built with **Spring Boot**, designed to manage photographers, their albums, and photos.  
 It allows CRUD operations on all entities, uses a relational database with **JPA**, and provides interactive **Swagger** documentation.
 
+URL de teste: https://photopedia-pdyu.onrender.com/swagger-ui/index.html
+
 ---
 
 ## 🧩 Technologies
@@ -28,8 +30,8 @@ Photographer
       └── Photo
 ```
 
-- **One-to-Many:** A Photographer has many Albums  
-- **One-to-Many:** An Album has many Photos  
+- **One-to-Many:** A Photographer has many Albums
+- **One-to-Many:** An Album has many Photos
 - **Unidirectional** relationships with full encapsulation via DTOs
 
 ---
@@ -85,8 +87,16 @@ spring.jpa.hibernate.ddl-auto=update
 
 ---
 
+## ❗️ Requisições de Criação e Edição
 
-## 🗃️ Example Payload
+> **Importante:**  
+> Os endpoints de criação e edição de fotógrafos e álbuns **NÃO aceitam arrays de filhos (`albums`, `photos`)** no corpo da requisição.  
+> Sempre use os endpoints específicos para criar e editar álbuns e fotos.  
+> O GET retorna a árvore completa (photographer → albums → photos), mas o PUT/POST só recebe campos simples.
+
+---
+
+## 🗃️ Example Payloads
 
 ## 📸 Photographer Endpoints
 
@@ -96,10 +106,15 @@ spring.jpa.hibernate.ddl-auto=update
 POST /api/photographers
 Content-Type: application/json
 ```
-
 ```json
 {
-  "name": "Lucca Lima"
+  "name": "Lucca Lima",
+  "email": "lucca@email.com",
+  "bio": "Landscape and portrait photographer based in Brazil.",
+  "phone": "+55 51 98765-4321",
+  "website": "https://luccalimafoto.com",
+  "instagram": "instagram.com/luccalimafoto",
+  "avatarUrl": "https://meusite.com/avatar.jpg"
 }
 ```
 
@@ -121,10 +136,15 @@ GET /api/photographers/1
 PUT /api/photographers/1
 Content-Type: application/json
 ```
-
 ```json
 {
-  "name": "Lucca Motta"
+  "name": "Lucca Motta",
+  "email": "novo@email.com",
+  "bio": "Fotógrafo premiado.",
+  "phone": "+55 51 91234-5678",
+  "website": "https://novosite.com",
+  "instagram": "instagram.com/novo_user",
+  "avatarUrl": "https://novosite.com/avatar_novo.jpg"
 }
 ```
 
@@ -144,7 +164,6 @@ DELETE /api/photographers/1
 POST /api/albums
 Content-Type: application/json
 ```
-
 ```json
 {
   "title": "Summer Vibes",
@@ -170,7 +189,6 @@ GET /api/albums/1
 PUT /api/albums/1
 Content-Type: application/json
 ```
-
 ```json
 {
   "title": "Summer Vibes Updated",
@@ -194,7 +212,6 @@ DELETE /api/albums/1
 POST /api/photos
 Content-Type: application/json
 ```
-
 ```json
 {
   "caption": "Sunset at the beach",
@@ -221,7 +238,6 @@ GET /api/photos/1
 PUT /api/photos/1
 Content-Type: application/json
 ```
-
 ```json
 {
   "caption": "Updated caption",
@@ -235,3 +251,36 @@ Content-Type: application/json
 ```http
 DELETE /api/photos/1
 ```
+
+---
+
+## 📝 Example Full Photographer Response (GET)
+
+```json
+{
+  "id": 1,
+  "name": "Lucca Lima",
+  "email": "lucca@email.com",
+  "bio": "Landscape and portrait photographer based in Brazil.",
+  "phone": "+55 51 98765-4321",
+  "website": "https://luccalimafoto.com",
+  "instagram": "instagram.com/luccalimafoto",
+  "avatarUrl": "https://meusite.com/avatar.jpg",
+  "albums": [
+    {
+      "id": 1,
+      "title": "Summer Vibes",
+      "photos": [
+        {
+          "id": 1,
+          "caption": "Sunset at the beach",
+          "url": "https://example.com/photo.jpg",
+          "albumId": 1
+        }
+      ]
+    }
+  ]
+}
+```
+
+---

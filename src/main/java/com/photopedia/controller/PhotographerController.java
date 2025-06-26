@@ -26,7 +26,9 @@ public class PhotographerController {
     @GetMapping
     @Operation(summary = "List all photographers / Listar fotógrafos", description = "Returns all photographers in the system / Retorna todos os fotógrafos cadastrados")
     public List<PhotographerDto> getAll() {
-        return photographerMapper.toDtoList(photographerService.findAll());
+        List<Photographer> photographers = photographerService.findAll();
+        List<PhotographerDto> photographerDtos = photographerMapper.toDtoList(photographers);
+        return photographerDtos;
     }
 
     @GetMapping("/{id}")
@@ -45,9 +47,10 @@ public class PhotographerController {
     @PutMapping("/{id}")
     @Operation(summary = "Update photographer / Atualizar fotógrafo", description = "Updates an existing photographer’s details / Atualiza os dados de um fotógrafo")
     public PhotographerDto update(@PathVariable Long id, @RequestBody PhotographerCreateRequest request) {
-        var updated = photographerMapper.toEntity(request);
-        updated.setId(id);
-        return photographerMapper.toDto(photographerService.save(updated));
+        Photographer existing = photographerService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Photographer not found"));
+        photographerMapper.updatePhotographerFromDto(request, existing);
+        return photographerMapper.toDto(photographerService.save(existing));
     }
 
     @DeleteMapping("/{id}")

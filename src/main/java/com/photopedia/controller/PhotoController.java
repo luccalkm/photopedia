@@ -42,7 +42,7 @@ public class PhotoController {
     @Operation(summary = "Create new photo / Criar foto", description = "Adds a new photo to an album / Cadastra uma nova foto no sistema")
     public PhotoDto create(@RequestBody PhotoCreateRequest request) {
         Photo photo = photoMapper.toEntity(request);
-        return photoMapper.toDto(photoService.save(photo));
+        return photoMapper.toDto(photoService.save(photo, request.getAlbumId()));
     }
 
     @PutMapping("/{id}")
@@ -50,7 +50,7 @@ public class PhotoController {
     public PhotoDto update(@PathVariable Long id, @RequestBody PhotoCreateRequest request) {
         Photo updated = photoMapper.toEntity(request);
         updated.setId(id);
-        return photoMapper.toDto(photoService.save(updated));
+        return photoMapper.toDto(photoService.save(updated, request.getAlbumId()));
     }
 
     @DeleteMapping("/{id}")

@@ -10,7 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PhotographerDto {
-    private Long id;
+    private Long Id;
     private String name;
+
+    private String email;
+    private String bio;
+    private String phone;
     private List<AlbumDto> albums;
 }

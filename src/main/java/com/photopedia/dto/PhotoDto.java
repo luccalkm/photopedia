@@ -11,4 +11,5 @@ public class PhotoDto {
     private Long id;
     private String caption;
     private String url;
+    private Long albumId;
 }

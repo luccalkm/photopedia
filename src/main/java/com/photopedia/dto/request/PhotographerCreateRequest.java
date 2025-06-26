@@ -9,5 +9,8 @@ import java.util.List;
 public class PhotographerCreateRequest {
     @NotBlank(message = "Name is required")
     private String name;
-    private List<AlbumCreateRequest> albums;
+
+    private String email;
+    private String bio;
+    private String phone;
 }

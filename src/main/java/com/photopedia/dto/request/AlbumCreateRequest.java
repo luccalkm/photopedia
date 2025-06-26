@@ -13,6 +13,4 @@ public class AlbumCreateRequest {
 
     @NotNull(message = "Photographer ID must be provided")
     private Long photographerId;
-
-    private List<PhotoCreateRequest> photos;
 }

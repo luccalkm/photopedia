@@ -10,6 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PhotoMapper {
+    @Mapping(source = "album.id", target = "albumId")
     PhotoDto toDto(Photo photo);
     List<PhotoDto> toDtoList(List<Photo> photos);
 
