@@ -141,10 +141,7 @@ Content-Type: application/json
   "name": "Lucca Motta",
   "email": "novo@email.com",
   "bio": "Fotógrafo premiado.",
-  "phone": "+55 51 91234-5678",
-  "website": "https://novosite.com",
-  "instagram": "instagram.com/novo_user",
-  "avatarUrl": "https://novosite.com/avatar_novo.jpg"
+  "phone": "+55 51 91234-5678"
 }
 ```
 
@@ -263,9 +260,6 @@ DELETE /api/photos/1
   "email": "lucca@email.com",
   "bio": "Landscape and portrait photographer based in Brazil.",
   "phone": "+55 51 98765-4321",
-  "website": "https://luccalimafoto.com",
-  "instagram": "instagram.com/luccalimafoto",
-  "avatarUrl": "https://meusite.com/avatar.jpg",
   "albums": [
     {
       "id": 1,
